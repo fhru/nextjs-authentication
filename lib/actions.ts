@@ -68,9 +68,12 @@ export const signInCredentials = async (
     await signIn("credentials", { email, password, redirectTo: "/dashboard" });
   } catch (error) {
     if (error instanceof AuthError) {
+      console.log({ errorType: error.type });
       switch (error.type) {
         case "CredentialsSignin":
           return { message: "Invalid Credentials" };
+        case "CallbackRouteError":
+          return { message: "User not found. Please register first." };
         default:
           return { message: "Something Went Wrong." };
       }
