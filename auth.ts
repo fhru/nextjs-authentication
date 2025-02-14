@@ -62,12 +62,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       return true;
     },
     jwt({ token, user }) {
-      if (user) token.role = user.role;
+      if (user) token.role = user.role || "user";
       return token;
     },
     session({ session, token }) {
       session.user.id = token.sub;
-      session.user.role = token.role;
+      session.user.role = token.role || "user";
       return session;
     },
   },
